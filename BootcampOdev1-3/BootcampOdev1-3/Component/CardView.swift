@@ -8,30 +8,18 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    @State private var isScaled: Bool = false
+    @State private var textContent: String = "Kocaeli Üniversitesi Yazılım Mühendisliği"
+    
     var body: some View {
         
         
         ZStack {
-            CustomBacgroundView()
+            CustomBackgroundView()
             VStack{
-                ZStack {
-                    Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [Color.indigo, Color.yellow],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .frame(width: 200, height: 200)
-                    Image("myself")
-                        .resizable()
-                        .scaledToFit()
-                        .offset(y: 30)
-                        .clipShape(Circle())
-                        .frame(width: 250, height: 250)
-                        .shadow(radius: 7)
-                }
+                HeaderImageView(isScaled: $isScaled)
+                    .scaleEffect(isScaled ? 0.9 : 0.8) // scale effect
                 
                 HStack{
                     Text("Ömer Çakar")
@@ -49,29 +37,28 @@ struct CardView: View {
                 }
                 .padding(.vertical)
                 
-                VStack{
+                VStack(spacing: 10){
                     HStack{
                         Text("Hakkımda")
                             .bold()
                         Spacer()
                     }
                     .padding(.horizontal, 20)
-                    Group{
-                        VStack{
-                            Text("Kocaeli Üniversitesi Yazılım Mühendisliği")
-                            Text("Swift - SwiftUI - Python - Golang")
-                            Text("Galatasaray ⭐️⭐️⭐️⭐️⭐️")
-                            Text("Kano - Paddlboard")
-                        }
-                    }
-                    .foregroundStyle(.white)
+                    
+                    Text(textContent)
+                        .foregroundStyle(.white)
                     
                 }
                 .padding(.vertical, 20)
                 
                 HStack{
                     Button{
-                        
+                        isScaled.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
+                                isScaled = false
+                            }
+                        }
                     }label: {
                         Text("Mesaj Gönder")
                     }
@@ -81,11 +68,27 @@ struct CardView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     
                     Button{
-                        
+                        isScaled.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
+                                isScaled = false
+                            }
+                        }
                     }label: {
                         Text("Takip Et")
                     }
                     .foregroundStyle(.yellow)
+                    .padding()
+                    .background()
+                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                    
+                    Button{
+                        
+                    }label: {
+                        Image(systemName: "arrow.right")
+                    }
+                    .bold()
+                    .foregroundStyle(.red)
                     .padding()
                     .background()
                     .clipShape(RoundedRectangle(cornerRadius: 25))
@@ -95,6 +98,19 @@ struct CardView: View {
             
         } //: Card
         .frame(width: 360, height: 740)
+        .onAppear {
+            // İlk açıldığında büyüt
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0.5)) {
+                isScaled = true
+            }
+            
+            // Sonra tekrar küçült
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
+                    isScaled = false
+                }
+            }
+        }
         
     }
 }

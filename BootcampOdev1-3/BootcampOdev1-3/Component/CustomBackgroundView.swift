@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct CustomBacgroundView: View {
+struct CustomBackgroundView: View {
     var body: some View {
         ZStack {
-            
             Color.black.opacity(0.7)
                 .clipShape(RoundedRectangle(cornerRadius: 30))
                 .offset(y: 8)
+                .shadow(radius: 5)
             
             
             Color.black.opacity(0.8)
@@ -28,10 +28,11 @@ struct CustomBacgroundView: View {
             )
             .clipShape(RoundedRectangle(cornerRadius: 30))
         }
+        
     }
 }
 
 #Preview {
-    CustomBacgroundView()
+    CustomBackgroundView()
         .padding()
 }
