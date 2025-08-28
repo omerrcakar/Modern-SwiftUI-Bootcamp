@@ -10,7 +10,10 @@ import SwiftUI
 struct CardView: View {
     
     @State private var isScaled: Bool = false
-    @State private var textContent: String = "Kocaeli Üniversitesi Yazılım Mühendisliği"
+    
+    @State private var textList : [String] = ["Kocaeli Üniversitesi", "Yazılım Mühendisliği", "Swift - SwiftUI - iOS", "Galatasaray ⭐️⭐️⭐️⭐️⭐️" ,"Kano Kürek - Fitness"]
+    
+    @State private var counter : Int = 0
     
     var body: some View {
         
@@ -40,59 +43,24 @@ struct CardView: View {
                 VStack(spacing: 10){
                     HStack{
                         Text("Hakkımda")
+                            .font(.system(size: 24))
                             .bold()
                         Spacer()
                     }
                     .padding(.horizontal, 20)
                     
-                    Text(textContent)
+                    Text(textList[counter])
+                        .font(.system(size: 20))
+                        .fontWeight(.bold)
                         .foregroundStyle(.white)
-                    
+                   
                 }
-                .padding(.vertical, 20)
+                .padding(.top, 20)
                 
-                HStack{
-                    Button{
-                        isScaled.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
-                                isScaled = false
-                            }
-                        }
-                    }label: {
-                        Text("Mesaj Gönder")
-                    }
-                    .foregroundStyle(.indigo)
-                    .padding()
-                    .background()
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    
-                    Button{
-                        isScaled.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5)) {
-                                isScaled = false
-                            }
-                        }
-                    }label: {
-                        Text("Takip Et")
-                    }
-                    .foregroundStyle(.yellow)
-                    .padding()
-                    .background()
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    
-                    Button{
-                        
-                    }label: {
-                        Image(systemName: "arrow.right")
-                    }
-                    .bold()
-                    .foregroundStyle(.red)
-                    .padding()
-                    .background()
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                }
+                Spacer()
+                CustomButtons(counter: $counter,isScaled: $isScaled, textListCount: textList.count)
+                Spacer()
+                
                 
             }//: Vstack
             

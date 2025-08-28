@@ -16,7 +16,7 @@ struct HeaderImageView: View {
             Circle()
                 .fill(
                     LinearGradient(
-                        colors: [Color.indigo, Color.yellow],
+                        colors: [Color.indigo, Color.white],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
